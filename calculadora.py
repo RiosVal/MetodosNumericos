@@ -1,6 +1,7 @@
 import math
 import sympy as sp
 
+
 def funcionLn(x):       #prueba de derivadas
     return math.log(x)
 
@@ -106,8 +107,9 @@ def verificacionBiseccion():
 
 def verificacionFalsaPosicion():
     tol = 0.000001
-    metodoFalsaPosicion(funcionExp, 0, 1, tol)
+    metodoFalsaPosicion(cos, 0, 1, tol)
 
 def verificacionNewtonRaphson():
     tol = 0.000001
     metodoNewtonRaphson(funcionExp, 1, tol)
+
