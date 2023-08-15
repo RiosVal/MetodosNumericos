@@ -1,5 +1,9 @@
 from calculadora import *
 
+def pedirFuncion()
+    funcion = input("Ingresa la función a calcular: ")
+    return funcion
+
 def menu():
     print("-----------------------------------------------------------------")
     print("                           Calculadora                           ")
@@ -12,25 +16,16 @@ def menu():
     print("6. Calcular la raiz de una función con el método de falsa posición")
     print("7. Calcular la raiz de una función con el método de nexton raphson")
     opcion = int(input("Escoge la opcion de tu preferencia"))
-    return opcion
+    fun = pedirFuncion()
+    switch (opcion) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:        
+    }
+    
 
-def opcion1():
-    funcion = input("Ingresa la función a calcular")
 
-def opcion2():
-    funcion = input("Ingresa la función a calcular")
-
-def opcion3():
-    funcion = input("Ingresa la función a calcular")
-
-def opcion4():
-    funcion = input("Ingresa la función a calcular")
-
-def opcion5():
-    funcion = input("Ingresa la función a calcular")
-
-def opcion6():
-    funcion = input("Ingresa la función a calcular")
-
-def opcion7():
-    funcion = input("Ingresa la función a calcular")
