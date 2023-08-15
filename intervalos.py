@@ -6,15 +6,12 @@ def f(x):
 
 def intervalos(distancia, repeticiones):
     x = distancia
-    contador = 0
     intervalosValidos = []
-    ingreso = []
     x0 = x-distancia
     for i in range (0, repeticiones):
         if( (f(x0)*f(x)) < 0 ):
             intervaloAnadir =x0, x 
             intervalosValidos.append(intervaloAnadir)
-            contador += 1
         x += distancia
         x0 = x-distancia
         
