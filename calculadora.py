@@ -1,4 +1,5 @@
 import math
+from funcsMenu import usarFuncion
 import sympy as sp
 
 
@@ -15,13 +16,13 @@ def calcularError(aprox, teor):   #error de derivada
     return abs(aprox - teor)
 
 def derivadaCentral(f, x, h):
-    return (f(x + h) - f(x - h)) / (2 * h)
+    return (usarFuncion(f, (x + h)) - usarFuncion(f, (x - h))) / (2 * h)
 
 def derivadaAtras(f, x, h):
-    return (f(x) - f(x-h)) / h
+    return (usarFuncion(f, x) - usarFuncion(f, (x-h))) / h
 
 def derivadaAdelante(f, x, h):
-    return (f(x + h) - f(x)) / h
+    return (usarFuncion(f, (x + h)) - usarFuncion(f, x)) / h
 
 def metodoPuntoFijo(g, x0, tol):
     xold = x0
