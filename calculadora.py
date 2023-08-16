@@ -84,6 +84,16 @@ def metodoNewtonRaphson(f, x0, tol):
             x0 = x1
     print('{:<22} {:<25}'.format(x1, error))    
 
+
+
+
+
+
+
+
+
+
+
 def verificacionDerivadas():
     x = 1.05
     h = 0.00001
@@ -107,7 +117,7 @@ def verificacionBiseccion():
 
 def verificacionFalsaPosicion():
     tol = 0.000001
-    metodoFalsaPosicion(cos, 0, 1, tol)
+    metodoFalsaPosicion(funcionExp, 0, 1, tol)
 
 def verificacionNewtonRaphson():
     tol = 0.000001
