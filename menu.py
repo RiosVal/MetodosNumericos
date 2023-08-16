@@ -1,14 +1,12 @@
 from calculadora import *
+from funcsMenu import *
 
-def pedirFuncion():
-    funcion = input("Ingresa la función a calcular: ")
-    return funcion
 
 def menu():
     bandera = True
-    
+    #math.exp(-x)-x
     while (bandera):
-        bandera =False 
+        bandera = False 
         print("-----------------------------------------------------------------")
         print("                           Calculadora                           ")
         print("-----------------------------------------------------------------")
@@ -19,21 +17,29 @@ def menu():
         print("5. Calcular la raiz de una función con el método de biseccion")
         print("6. Calcular la raiz de una función con el método de falsa posición")
         print("7. Calcular la raiz de una función con el método de nexton raphson")
-        opcion = int(input("Escoge la opcion de tu preferencia"))
+        opcion = int(input("Escoge la opcion de tu preferencia: "))
         if opcion < 0 or opcion > 7:
             print("Ingrese un número válido")
-            bandera =True
+            bandera = True
         
-    fun = pedirFuncion()
     if opcion== 1:
+        funcion = pedirFuncion()
+        valorX = pedirValX()
+        print(derivadaCentral(funcion, valorX, 0.0000001))
     elif opcion== 2:
+        funcion = pedirFuncion()
+        valorX = pedirValX()
+        print(derivadaAdelante(funcion, valorX, 0.0000001))
     elif opcion== 3:
-    elif opcion== 4:
-    elif opcion== 5:
-    elif opcion== 6:
-    elif opcion== 7:
+        funcion = pedirFuncion()
+        valorX = pedirValX()
+        print(derivadaAtras(funcion, valorX, 0.0000001))
+    #elif opcion== 4:
+    #elif opcion== 5:
+    #elif opcion== 6:
+    #elif opcion== 7:
     
         
     
-
+menu()
 
