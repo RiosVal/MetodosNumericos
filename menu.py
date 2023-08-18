@@ -16,28 +16,46 @@ def menu():
         print("4. Calcular la raiz de una función con el método del punto fijo")
         print("5. Calcular la raiz de una función con el método de biseccion")
         print("6. Calcular la raiz de una función con el método de falsa posición")
-        print("7. Calcular la raiz de una función con el método de nexton raphson")
+        print("7. Calcular la raiz de una función con el método de newton raphson")
+        print("8. Calcular la raiz de una función con el método de la secante")
+        print("9. Calcular los intervalos en donde SI hay raices d euna función")
         opcion = int(input("Escoge la opcion de tu preferencia: "))
-        if opcion < 0 or opcion > 7:
+        if opcion < 0 or opcion > 9:
             print("Ingrese un número válido")
             bandera = True
-        
+    funcion = pedirFuncion()
     if opcion== 1:
-        funcion = pedirFuncion()
         valorX = pedirValX()
         print(derivadaCentral(funcion, valorX, 0.0000001))
     elif opcion== 2:
-        funcion = pedirFuncion()
         valorX = pedirValX()
         print(derivadaAdelante(funcion, valorX, 0.0000001))
     elif opcion== 3:
-        funcion = pedirFuncion()
         valorX = pedirValX()
         print(derivadaAtras(funcion, valorX, 0.0000001))
-    #elif opcion== 4:
-    #elif opcion== 5:
-    #elif opcion== 6:
-    #elif opcion== 7:
+    elif opcion== 4:
+        valorX = pedirValX()
+        i, xold, error = metodoPuntoFijo(funcion, valorX, 0.0000001)
+        print('{:<3} {:<20} {:<25}'.format(i, xold, error))
+    elif opcion== 5:
+        x0, x1 = pedirIntervalo()
+        i, medio, error = metodoBiseccion(funcion, x0, x1, 0.0000001)
+        print('{:<6} {:<22} {:<20}'.format(i, medio, error))
+    elif opcion== 6:
+        x0, x1 = pedirIntervalo()
+        i, pos, error = metodoFalsaPosicion(funcion, x0, x1, 0.0000001)
+        print('{:<3} {:<22} {:<25}'.format(i, pos, error))
+    elif opcion== 7:
+        valorX = pedirValX()
+        x1, error = metodoNewtonRaphson(funcion, valorX, 0.0000001)
+        print('{:<22} {:<25}'.format(x1, error))
+    elif opcion== 8:
+        x0, x1 = pedirIntervalo()
+        i, pos, error = MetodoSecante(funcion, x0, x1)
+        print("{:<6} {:<22} {:<20}".format(i, pos, error))
+    elif opcion == 9:
+        inicio, fin = pedirIntervalo()
+        calcularIntervalos(metodoBiseccion, funcion, inicio, fin)
     
         
     
