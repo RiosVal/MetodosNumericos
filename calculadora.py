@@ -113,6 +113,7 @@ def calcularIntervalos(metodo, funcion, inicio, fin):
     superior = 0
 
     while superior < limite:
+        
         superior = inferior + 0.2
         try:
             raiz = metodo(funcion, inferior, superior, 0.0000001)
@@ -124,6 +125,7 @@ def calcularIntervalos(metodo, funcion, inicio, fin):
     
     for intervalo in raices:
         print(intervalo)
+    return raices
 
 
 
