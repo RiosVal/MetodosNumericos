@@ -20,8 +20,12 @@ def der (funcion, x, h = 0.001):
     retorno = (usarFuncion(funcion, x+h)-usarFuncion(funcion, x))/h
     return retorno
 
-def biseccion(funcion, err = 1e-20, control = 0.1):
-    a, b = pedirIntervalo()
+def biseccion(funcion, intervalo = 0, err = 1e-20, control = 0.1):
+    if intervalo == 0:
+        a, b = pedirIntervalo()
+    else:
+        a, b = intervalo 
+
 
     while control > err:
         fa, fb = usarFuncion(funcion, a), usarFuncion(funcion, b)
@@ -48,6 +52,59 @@ def newtonRaphson(funcion, err = 1e-20, control = 0.1):
         
     print(xi)
 
+def intervalos(funcion):
+    distancia = int(input("Ingrese la distancia entre los intervalos: "))
+    repeticiones = int(input("Ingrese cuantos intervalos quiere revisar: "))
+    x = distancia
+    intervalosValidos = []
+    ingreso = []
+    x0 = x-distancia
+    
+    for i in range (0, repeticiones):
+        if( (usarFuncion(funcion, x0)*usarFuncion(funcion, x)) < 0 ):
+            intervaloAnadir = x0, x 
+            intervalosValidos.append(intervaloAnadir)
+            
+        x += distancia
+        x0 = x-distancia
+    
+
+    menu2_string= f"""
+        El o los intervalos donde hay una raiz: {intervalosValidos}
+          
+        Indique con qué función desea evaluar el o los intervalos: 
+        1. Bisección
+        2. Falsa posición 
+        3. Secante
+    """
+    options2 = {
+        1: biseccion,
+        #Falsa posicion
+        #Metodo secante
+    }
+
+    while True:
+        print(menu2_string)
+
+        try:
+            opcion = int(input("Escoge la opcion de tu preferencia: "))
+
+        except BaseException:
+            print("Tienes que ingresar un valor correcto")
+            continue
+
+        if opcion not in options2.values():
+            break
+            
+       
+    selection_result = options2.get(opcion)
+
+    if selection_result is None:
+        print("Opcion no valida")
+        return 
+    
+    for intervalo in intervalosValidos:
+        selection_result(funcion, intervalo)
 
 def menu():
     menu_string = """
@@ -62,10 +119,12 @@ def menu():
         5. Calcular la raiz de una función con el método de biseccion
         6. Calcular la raiz de una función con el método de falsa posición
         7. Calcular la raiz de una función con el método de newton raphson
+        8. Calcular los intervalos donde hay una raiz y evaluarlos
 """
 
     options = {
         7: newtonRaphson,
+        8: intervalos,
         5: biseccion,
     }
 
