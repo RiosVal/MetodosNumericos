@@ -18,7 +18,7 @@ def menu():
         print("6. Calcular la raiz de una función con el método de falsa posición")
         print("7. Calcular la raiz de una función con el método de newton raphson")
         print("8. Calcular la raiz de una función con el método de la secante")
-        print("9. Calcular los intervalos en donde SI hay raices d euna función")
+        print("9. Calcular los intervalos en donde SI hay raices de una función")
         opcion = int(input("Escoge la opcion de tu preferencia: "))
         if opcion < 0 or opcion > 9:
             print("Ingrese un número válido")
@@ -55,7 +55,43 @@ def menu():
         print("{:<6} {:<22} {:<20}".format(i, pos, error))
     elif opcion == 9:
         inicio, fin = pedirIntervalo()
-        calcularIntervalos(metodoBiseccion, funcion, inicio, fin)
+        
+        menu =  """"
+                Con qué metodo quieres econtrar las raices:
+                1. Biseccion
+                2. Falsa posición
+                3. Secante
+            """
+        opciones2 = {
+            1: metodoBiseccion,
+            2: metodoFalsaPosicion,
+            3: MetodoSecante
+        }
+
+        while True:
+            print(menu)
+
+            try:
+                opcion2 = int(input("Escoge la opción de tu preferencia: "))
+            except BaseException:
+                print("Tienes que ingresar un valor correcto") 
+                continue
+
+            if opcion2 not in opciones2.values():
+                break
+
+        resultadoSeleccionado = opciones2.get(opcion2)
+
+        if resultadoSeleccionado is None: 
+            print("Opción no valida")
+            return
+        
+        intervalos = calcularIntervalos(resultadoSeleccionado, funcion, inicio, fin)
+        print("Las raices son: ")
+        for intervalo in intervalos:
+            a, b = intervalo
+            print(resultadoSeleccionado(funcion, a, b, 0.0000001))
+        #calcularIntervalos(metodoFalsaPosicion, funcion, inicio, fin)
     
         
     
