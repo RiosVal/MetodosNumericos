@@ -1,4 +1,5 @@
 import math
+import numpy as np 
 
 def pedirFuncion():
     funcion = input("Ingresa la función a calcular: ")
