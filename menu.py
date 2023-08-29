@@ -27,12 +27,12 @@ def menu2(funcion):
         if opcion2 not in opciones2.values():
             break
 
-        resultadoSeleccionado = opciones2.get(opcion2)
+    resultadoSeleccionado = opciones2.get(opcion2)
 
     if resultadoSeleccionado is None: 
         print("Opción no valida")
         return
-    print("Los intervalos y las raices son: ")
+    
     calcularIntervalos(resultadoSeleccionado, funcion)
 
 
@@ -89,7 +89,7 @@ def menu():
     if opcion1 == 1 or opcion1 ==2 or opcion1 ==3 or opcion1 ==4 or opcion1 ==7:
         valX = pedirValX()
         print(resultadoSeleccionado(funcion, valX, 0.0000001))
-    elif opcion1 == 10:
+    elif opcion1 == 10 or opcion1 == 9:
         resultadoSeleccionado(funcion)
     else:
         x0, x1 = pedirIntervalo()
