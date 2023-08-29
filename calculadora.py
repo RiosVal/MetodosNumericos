@@ -106,7 +106,7 @@ def MetodoSecante(funcion, x0, x1, tol=0.00000001):
     #print("{:<6} {:<22} {:<20}".format(i, pos, error))
 
 def calcularIntervalos(metodo, funcion):
-    deltaX = int(input("Ingrese valor Δ del intervalo: "))
+    deltaX = float(input("Ingrese valor Δ del intervalo: "))
     limite = int(input("Ingrese valor x1 del intervalo: "))
     raices = []
     inferior = 0
@@ -122,7 +122,7 @@ def calcularIntervalos(metodo, funcion):
         if raiz != None:
             raices.append([inferior, superior])
         inferior = superior
-    
+    print("Los intervalos y las raices son: ")
     for intervalo in raices:
         print(intervalo)
 
