@@ -127,6 +127,30 @@ def calcularIntervalos(metodo, funcion, inicio, fin):
         print(intervalo)
     return raices
 
+def calcularIntervalos2(metodo, funcion):
+    deltaX = float(input("Ingrese valor Δ del intervalo: "))
+    limite = int(input("Ingrese valor x1 del intervalo: "))
+    raices = []
+    inferior = 0
+    superior = 0
+
+    while superior < limite:
+        
+        superior = inferior + deltaX
+        try:
+            raiz = metodo(funcion, inferior, superior, 0.0000001)
+        except:
+            raiz = None
+        if raiz != None:
+            raices.append([inferior, superior])
+        inferior = superior
+    print("Los intervalos y las raices son: ")
+    for intervalo in raices:
+        print(intervalo)
+
+    for intervalo in raices:
+            a, b = intervalo
+            print(metodo(funcion, a, b, 0.0000001))
 
 
 
