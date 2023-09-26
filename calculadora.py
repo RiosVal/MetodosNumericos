@@ -26,7 +26,7 @@ def derivadaAdelante(f, x, h):
 
 def metodoPuntoFijo(g, x0, tol):
     xold = x0
-    for i in range(50):
+    for i in range(70):
         xnew = usarFuncion(g, xold)
         error = abs((xnew - xold) / xnew)
         if error <= tol:
