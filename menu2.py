@@ -79,7 +79,6 @@ def menu3():
             break
 
     resultadoSeleccionado = opciones1.get(opcion1)
-
     if resultadoSeleccionado is None: 
         print("Opción no valida")
         return
