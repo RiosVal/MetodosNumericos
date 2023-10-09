@@ -18,5 +18,5 @@ def puntosMedios(funcion, a, b, n):
         suma += deltaX * funcion((listax[k] + listax[k-1])/2)
     return suma
 
-print(extremosIzquierdos(x_cuadrado, 0, 3, 5))
+print(extremosIzquierdos(x_cuadrado, 0, 3, 20))
 print(puntosMedios(x_cuadrado, 0, 3, 5))
