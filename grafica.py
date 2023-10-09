@@ -9,10 +9,8 @@ def grafica(funcion):
     rangoSuperior = float(input("Ingrese limite superior del eje Y: "))
     rangoInferior = float(input("Ingrese limite inferior del eje Y: "))
     x = np.linspace(rangoIzquierdo, rangoDerecho, 400)
-    # Calcular los valores de y correspondientes a los valores de x
     y = usarFuncion(funcion, x)
 
-    # Crear el gráfico
     plt.plot(x, y, label=funcion)
     plt.axhline(0, color='black', linewidth=0.5)  # Línea del eje x
     plt.axvline(0, color='black', linewidth=0.5)  # Línea del eje y

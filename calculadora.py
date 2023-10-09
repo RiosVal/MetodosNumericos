@@ -1,5 +1,6 @@
 import math
-from funcsMenu import usarFuncion
+import numpy as np
+from funcsMenu import *
 
 
 def funcionLn(x):       #prueba de derivadas
@@ -22,6 +23,7 @@ def derivadaAtras(f, x, h):
 
 def derivadaAdelante(f, x, h):
     return (usarFuncion(f, (x + h)) - usarFuncion(f, x)) / h
+
 
 def metodoPuntoFijo(g, x0, tol):
     xold = x0
@@ -59,6 +61,7 @@ def metodoBiseccion(f, x0, x1, tol):
 
 def metodoFalsaPosicion(f, x0, x1, tol):
     anterior = x0
+    
 
     for i in range(50):
         if usarFuncion(f, x0) * usarFuncion(f, x1) < 0:
@@ -125,16 +128,129 @@ def calcularIntervalos(metodo, funcion):
         print(intervalo)
 
     for intervalo in raices:
-        a, b = intervalo
-        print(metodo(funcion, a, b, 0.0000001))
+            a, b = intervalo
+            print(metodo(funcion, a, b, 0.0000001))
+
+
+def sumas_riemman_izquierda(funcion, a, b, tol):
+    numero_rectangulos = int(input("Ingrese el numero de rectangulos: "))
+    deltaX= (b-a)/numero_rectangulos
+    valoresX = np.linspace(a, b-deltaX, numero_rectangulos)
+    suma = 0
+
+    for i in valoresX:
+        suma = (usarFuncion(funcion, i)*deltaX)+ suma
+        
+    return suma
+
+
+def sumas_riemman_punto_medio(funcion, a, b, tol):
+    numero_rectangulos = int(input("Ingrese el número de rectangulos: "))
+    deltaX= (b-a)/numero_rectangulos
+    valoresX = np.linspace(a, b-deltaX, numero_rectangulos)
+    suma = 0
     
+    for i in valoresX:
+        suma = (usarFuncion(funcion, i+(deltaX/2))*deltaX)+ suma
+        
+    return suma
 
+def trapecio(funcion, a, b, tol):
+    a = int(a)
+    b = int(b)
+    n = int(input("Ingrese el número de trapecios: "))
+    listax = np.linspace(a, b, n+1)
+    ancho = (b-a)
+    suma = 0
+    for i in range(1, n):
+        suma += usarFuncion(funcion, listax[i])
 
+    numerador = usarFuncion(funcion, listax[a])+(2*suma)+usarFuncion(funcion, listax[n])
+    return ancho * (numerador / (2*n))
 
+def simpson_un_tercio(funcion, a, b, tol):
+    listax = np.linspace(a, b, 3)
+    numerador = usarFuncion(funcion, listax[0]) + (4*usarFuncion(funcion, listax[1])) + usarFuncion(funcion, listax[2])
+    return (b - a) * (numerador / 6)
 
+def simpson_intervalos(funcion, a, b, tol):
+    n = int(input("Defina el número de intervalos: "))
+    listax = np.linspace(a, b, n+1)
+    suma_impares = 0
+    suma_pares = 0
 
+    for i in range(1, n):
+        if i % 2 == 0:
+            suma_pares += usarFuncion(funcion, listax[i])
+        else:
+            suma_impares += usarFuncion(funcion, listax[i])
+    
+    numerador = usarFuncion(funcion, listax[0]) + (4*suma_impares) + (2*suma_pares) + usarFuncion(funcion, listax[n])
 
+    return (b-a) * (numerador / (3*n))
 
+def simpson_3_8_intervalos(funcion, a, b, tol):
+    n = int(input("Defina el número de intervalos: "))
+    listax = np.linspace(a, b, n + 1)
+    suma = 0
+
+    h = (b - a) / n
+
+    for i in range(1, n):
+        if i % 3 == 0:
+            suma += 2 * usarFuncion(funcion, listax[i])
+        else:
+            suma += 3 * usarFuncion(funcion, listax[i])
+
+    resultado = (3 * h / 8) * (usarFuncion(funcion, listax[0]) + usarFuncion(funcion, listax[n]) + suma)
+
+    return resultado
+
+def romberg_integration(funcion, a, b, tol):
+    n = int(input("Ingrese el número de iteraciones que desea hacer: "))
+    R = np.zeros((n, n), dtype=float)
+
+    h = b - a
+    R[0, 0] = 0.5 * h * (usarFuncion(funcion, a) + usarFuncion(funcion, b))
+
+    for i in range(1, n):
+        h /= 2
+        sum_term = 0
+        for k in range(1, 2**i, 2):
+            sum_term += usarFuncion(funcion, a + k * h)
+        R[i, 0] = 0.5 * R[i-1, 0] + sum_term * h
+
+        for j in range(1, i+1):
+            R[i, j] = (4**j * R[i, j-1] - R[i-1, j-1]) / (4**j - 1)
+
+    return R[n-1, n-1]
+
+def jacobi(A, b, x0, tol=1e-6, max_iter=100):
+    n = len(b)
+    x = x0.copy()
+    for k in range(max_iter):
+        x_new = [0.0] * n
+        for i in range(n):
+            sum1 = sum(A[i][j] * x[j] for j in range(i))
+            sum2 = sum(A[i][j] * x[j] for j in range(i + 1, n))
+            x_new[i] = (b[i] - sum1 - sum2) / A[i][i]
+        if all(abs(x_new[i] - x[i]) < tol for i in range(n)):
+            break
+        x = x_new.copy()
+    return x
+
+def gauss_seidel(A, b, x0, tol=1e-6, max_iter=100):
+    n = len(b)
+    x = x0.copy()
+    for k in range(max_iter):
+        for i in range(n):
+            sum1 = sum(A[i][j] * x[j] for j in range(i))
+            sum2 = sum(A[i][j] * x[j] for j in range(i + 1, n))
+            x[i] = (b[i] - sum1 - sum2) / A[i][i]
+        if all(abs(x[i] - x0[i]) < tol for i in range(n)):
+            break
+        x0 = x.copy()
+    return x
 
 def verificacionDerivadas():
     x = 1.05
