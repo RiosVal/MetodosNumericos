@@ -53,6 +53,15 @@ def menu3():
         8. Calcular la raiz de una función con el método de la secante
         9. Calcular los intervalos en donde SI hay raices de una función
         10. Graficar una función
+        11. Calcular el área por sumas de riemman izquierda
+        12. Calcular el área por sumas de riemman punto medio
+        13. Calcular el área por trapecios 
+        14. Calcular el área por simpson 1/3
+        15. Calcular el área por simpson intervalos 
+        16. Calcular el área por simpson 3/8
+        17. Calcular el área por Romberg
+        18. Calcular sistema de ecuaciones por Jacobi
+        19. Calcular sistema de ecuaciones por Gauss Seidel
         """
     opciones1 = {
         1:derivadaCentral,
@@ -64,8 +73,18 @@ def menu3():
         7:metodoNewtonRaphson,
         8:MetodoSecante,
         9:menu2,
-        10:grafica
+        10:grafica,
+        11: sumas_riemman_izquierda,
+        12: sumas_riemman_punto_medio, 
+        13: trapecio,
+        14: simpson_un_tercio,
+        15: simpson_intervalos,
+        16: simpson_3_8_intervalos,
+        17: romberg_integration,
+        18: jacobi,
+        19: gauss_seidel
         }
+    
     while True:
         print(menu1)
 
@@ -79,17 +98,23 @@ def menu3():
             break
 
     resultadoSeleccionado = opciones1.get(opcion1)
+    
     if resultadoSeleccionado is None: 
         print("Opción no valida")
         return
     
-    funcion = pedirFuncion()
+    if opcion1 < 18:
+        funcion = pedirFuncion()
 
     if opcion1 == 1 or opcion1 ==2 or opcion1 ==3 or opcion1 ==4 or opcion1 ==7:
         valX = pedirValX()
         print(resultadoSeleccionado(funcion, valX, 0.0000001))
     elif opcion1 == 10 or opcion1 == 9:
         resultadoSeleccionado(funcion)
+    elif opcion1 == 18 or opcion1 == 19:
+        A, B = pedir_matriz()
+        C = [0, 0, 0]
+        print(resultadoSeleccionado(A, B, C))
     else:
         x0, x1 = pedirIntervalo()
         print(resultadoSeleccionado(funcion, x0, x1, 0.0000001))
