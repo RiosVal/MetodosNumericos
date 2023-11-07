@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def polinomial(arrayX, arrayY):
+def polinomial(arrayX, arrayY):  #regresion de grado 2
     n = len(arrayX)
     sumX = 0; sumX2 = 0; sumX3 = 0
     sumX4 = 0; sumY = 0; sumXY = 0
@@ -24,7 +24,7 @@ def polinomial(arrayX, arrayY):
     b = np.array([sumY, sumXY, sumXXY])
 
     VV1 = np.dot(np.linalg.inv(A), b)
-    return VV1
+    return VV1     #coeficientes de la regresión polinómica de grado 2
 
 
 def Gauss(sumXY, sumXX, sumXXX, sumXXXX, sumXXY, sumX, sumY, n):
@@ -36,9 +36,9 @@ def Gauss(sumXY, sumXX, sumXXX, sumXXXX, sumXXY, sumX, sumY, n):
     b = np.array([sumY, sumXY, sumXXY])
 
     VV1 = np.dot(np.linalg.inv(A), b)
-    return VV1
+    return VV1           #coeficientes
 
-def minCuad(arrayX, arrayY, m, n):
+def minCuad(arrayX, arrayY, m, n):    #regresion de grado 2
     n = len(arrayX)
     sumXY = 0; sumX2 = 0; sumX = 0; sumY = 0
     sumX3 = 0; sumX4 = 0; sumXXY = 0

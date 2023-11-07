@@ -1,6 +1,4 @@
 import numpy as np
-import sympy as sym
-import matplotlib.pyplot as plt
 import math
 
 def f(x):
@@ -40,78 +38,29 @@ def Newton(a, b, n, f, x):
         newInter += diag[i]*prod[i]
     return newInter
 
-# x=2
-# InterpNew = Newton(1, 5, 5, f, x)
-# error = abs(InterpNew - f(2))/(f(2))
-# print('{:<20} {:<20} {:<20}'.format('f(x)', 'Newton', '%Error'))
-# print('{:<20} {:<20} {:<20}'.format(f(x), InterpNew, error*100))
+x=2
+InterpNew = Newton(1, 5, 5, f, x)
+error = abs(InterpNew - f(2))/(f(2))
+print('{:<20} {:<20} {:<20}'.format('f(x)', 'Newton', '%Error'))
+print('{:<20} {:<20} {:<20}'.format(f(x), InterpNew, error*100))
 
 
-def lagrange():
-    # Interpolacion de Lagrange
-    # divisoresL solo para mostrar valores
+def Lagrange(a, b, n, f, x):
+    xi = np.linspace(a, b, n +1)
+    sum = 0
 
+    for i in range(n+1):
+        prod = 1
+        for j in range(n + 1):
+            if j != i:
+                prod = (x - xi[j])/(xi[i] - xi[j])
+            else:
+                continue
+        sum += prod*f(xi[i])
+    return sum
 
-    # INGRESO , Datos de prueba
-    xi = np.array([0, 0.2, 0.3, 0.4])
-    fi = np.array([1, 1.6, 1.7, 2.0])
-
-    # PROCEDIMIENTO
-    # Polinomio de Lagrange
-    n = len(xi)
-    x = sym.Symbol('x')
-    polinomio = 0
-    divisorL = np.zeros(n, dtype = float)
-    for i in range(0,n,1):
-        
-        # Termino de Lagrange
-        numerador = 1
-        denominador = 1
-        for j  in range(0,n,1):
-            if (j!=i):
-                numerador = numerador*(x-xi[j])
-                denominador = denominador*(xi[i]-xi[j])
-        terminoLi = numerador/denominador
-
-        polinomio = polinomio + terminoLi*fi[i]
-        divisorL[i] = denominador
-
-    # simplifica el polinomio
-    polisimple = polinomio.expand()
-
-    # para evaluación numérica
-    px = sym.lambdify(x,polisimple)
-
-    # Puntos para la gráfica
-    muestras = 101
-    a = np.min(xi)
-    b = np.max(xi)
-    pxi = np.linspace(a,b,muestras)
-    pfi = px(pxi)
-
-    # SALIDA
-    print('    valores de fi: ',fi)
-    print('divisores en L(i): ',divisorL)
-    print()
-    print('Polinomio de Lagrange, expresiones')
-    print(polinomio)
-    print()
-    print('Polinomio de Lagrange: ')
-    print(polisimple)
-
-    # Gráfica
-    plt.plot(xi,fi,'o', label = 'Puntos')
-    plt.plot(pxi,pfi, label = 'Polinomio')
-    plt.legend()
-    plt.xlabel('xi')
-    plt.ylabel('fi')
-    plt.title('Interpolación Lagrange')
-    plt.show()
-
-lagrange()
-
-def hola():
-    a = 1
-    b = 2
-    c = a + b
-    return c
+x=2
+InterpLag = Lagrange(1, 5, 5, f, x)
+error = abs(InterpLag - f(x))/(f(x))
+print('{:<20} {:<20} {:<20}'.format('f(x)', 'Lagrange', '%Error'))
+print('{:<20} {:<20} {:<20}'.format(f(x), InterpLag, error*100)) 
