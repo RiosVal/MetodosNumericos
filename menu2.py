@@ -33,12 +33,10 @@ def menu2(funcion):
         print("Opción no valida")
         return
     
-    calcularIntervalos2(resultadoSeleccionado, funcion)
+    calcularIntervalos(resultadoSeleccionado, funcion)
 
 
-def menu3():
-    bandera = True
-    #math.exp(-x)-x
+def menu():
     menu1 = """
         -----------------------------------------------------------------
                                    Calculadora                           
@@ -62,6 +60,9 @@ def menu3():
         17. Calcular el área por Romberg
         18. Calcular sistema de ecuaciones por Jacobi
         19. Calcular sistema de ecuaciones por Gauss Seidel
+        20. Realizar regresión lineal
+        21. Realizar regresión polinomial
+        22. Realizar interpolación por metodo de lagrange 
         """
     opciones1 = {
         1:derivadaCentral,
@@ -82,7 +83,10 @@ def menu3():
         16: simpson_3_8_intervalos,
         17: romberg_integration,
         18: jacobi,
-        19: gauss_seidel
+        19: gauss_seidel,
+        20: regresion_lineal,
+        21: regresion_polinomial,
+        22: lagrange_interpolation
         }
     
     while True:
@@ -103,7 +107,7 @@ def menu3():
         print("Opción no valida")
         return
     
-    if opcion1 < 18:
+    if opcion1 < 18 or opcion1 == 22:
         funcion = pedirFuncion()
 
     if opcion1 == 1 or opcion1 ==2 or opcion1 ==3 or opcion1 ==4 or opcion1 ==7:
@@ -115,8 +119,13 @@ def menu3():
         A, B = pedir_matriz()
         C = [0, 0, 0]
         print(resultadoSeleccionado(A, B, C))
+    elif opcion1 == 20 or opcion1 == 21:
+        resultadoSeleccionado()
+    elif opcion1 == 22:
+        val_X = pedirValX()
+        print(lagrange_interpolation(funcion, val_X))
     else:
         x0, x1 = pedirIntervalo()
         print(resultadoSeleccionado(funcion, x0, x1, 0.0000001))
 
-menu3()
+menu()

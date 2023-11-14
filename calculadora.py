@@ -1,6 +1,6 @@
 import math
 from funcsMenu import usarFuncion
-import sympy as sp
+import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -275,3 +275,128 @@ def gauss_seidel(A, b, x0, tol=1e-6, max_iter=100):
             break
         x0 = x.copy()
     return x
+
+def regresion_lineal():
+    x_dato = []
+    y_dato = []
+    dato = 0.0
+    cantidad_datos = int(input("Ingrese cantidad de datos: "))
+    
+    print("Ingrese valores de X")
+    for i in range(cantidad_datos):
+        dato = float(input("Siguiente: "))
+        x_dato.append(dato)
+    
+    print("Ingrese valores de y")
+    for i in range(cantidad_datos):
+        dato = float(input("Siguiente: "))
+        y_dato.append(dato)
+
+    suma1 = 0
+    suma2 = 0
+    suma3 = 0
+    suma4 = 0
+    n = len(x_dato)
+
+    for i in range(0, n):
+        suma1 += x_dato[i]*y_dato[i]
+        suma2 += x_dato[i]
+        suma3 += y_dato[i]
+        suma4 += x_dato[i]**2
+
+    a1 = ((n*suma1)-(suma2*suma3))/((n*suma4)-(suma2**2))
+    a0 = (suma3/n)-(a1*(suma2/n))
+    print(f"Coeficiente: {a0}")
+
+    resol = 20
+    xx = np.linspace(-1,12, resol)
+    yy = a0 + a1*xx
+
+    fig, ax = plt.subplots()
+    ax.plot(xx, yy, "b")
+    ax.plot(x_dato, y_dato, "o")
+    plt.grid()
+    plt.show()
+
+
+def Gauss(SumXY, SumXX, SumXXX, SumXXXX, SumXXY, SumX, SumY, n):
+    A=np.array([[n, SumX, SumXX],
+                [SumX, SumXX, SumXXX],
+                [SumXX, SumXXX, SumXXXX]])
+    
+    b = np.array([SumY, SumXY, SumXXY])
+
+    VVI = np.dot(np.linalg.inv(A), b)
+
+    return VVI
+
+def minCuad(x, y, m, n):
+    SumXY=0; SumXX=0; SumX=0; SumY=0; SumXXX=0; SumXXXX=0; SumXXY=0
+
+    for i in range(len(x)):
+        SumXY += x[i]*y[i]
+        SumXX += x[i]**2
+        SumXXX += x[i]**3
+        SumXXXX += x[i]**4
+        SumXXY += x[i]**2*y[i]
+        SumX += x[i]
+        SumY += y[i]
+    a0, a1, a2 = Gauss(SumXY, SumXX, SumXXX, SumXXXX, SumXXY, SumX, SumY, n)
+
+    return a0, a1, a2
+
+def regresion_polinomial():
+    x_dato = []
+    y_dato = []
+    dato = 0.0
+    cantidad_datos = int(input("Ingrese cantidad de datos: "))
+    
+    print("Ingrese valores de X")
+    for i in range(cantidad_datos):
+        dato = float(input("Siguiente: "))
+        x_dato.append(dato)
+    
+    print("Ingrese valores de y")
+    for i in range(cantidad_datos):
+        dato = float(input("Siguiente: "))
+        y_dato.append(dato)
+    
+    m = 2; n = len(x_dato)
+
+    if n < m+1:
+        print('Pocos datos (n > m+1)')
+    else:
+        a0,a1,a2 = minCuad(x_dato, y_dato, m, n)
+
+        resol = 100
+        xx = np.linspace(-2, 12, resol)
+        yy = a0 + a1*xx + a2*xx**2
+
+        fig, ax = plt.subplots()
+        ax.plot(xx,yy,'r')
+        ax.plot(x_dato,y_dato,'o')
+        plt.grid()
+        plt.show()
+
+def lagrange_interpolation(funcion, x):
+    x_values = []
+
+    dato = 0.0
+    cantidad_datos = int(input("Ingrese cantidad de datos: "))
+    
+    print("Ingrese valores de X")
+    for i in range(cantidad_datos):
+        dato = float(input("Siguiente: "))
+        x_values.append(dato)
+
+    n = len(x_values)
+    result = 0.0
+
+    for i in range(n):
+        term = usarFuncion(funcion, x_values[i])
+        for j in range(n):
+            if j != i:
+                term = term * (x - x_values[j]) / (x_values[i] - x_values[j])
+        result += term
+
+    return result
